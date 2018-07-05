@@ -15,7 +15,7 @@ DateInput.propTypes = {
   required: PropTypes.bool,
   onChange: PropTypes.func,
   name: PropTypes.string,
-  value: PropTypes.string
+  value: birtDayPropTypes
 }
 
 DateInput.defaultProps = {
@@ -26,5 +26,11 @@ function getDate() {
   let date = new Date();
   date.setUTCMinutes(date.getUTCMinutes() - date.getTimezoneOffset());
   return date.toISOString().slice(0, 10);
+}
+
+const birtDayPropTypes = (props, propsName, component) => {
+  const dateOfBirth = props[propsName],
+  isBirthDay = (typeof dateOfBirth === 'string') && /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(dateOfBirth);
+  if (!isBirthDay) return (new Error(`Неверный формат параметра ${propName} в компоненте ${component}: необходимо указать дату рождения в формате YYYY-MM-DD`));
 }
 
